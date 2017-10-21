@@ -25,6 +25,7 @@ module V1
             current =
               begin
                 decoded_token = JsonWebToken.decode(token)
+                raise ::JWT::DecodeError unless decoded_token
                 entity_class.send(:find_by_id, decoded_token[identity.to_sym])
               rescue ::JWT::DecodeError
                 nil
